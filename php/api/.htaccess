@@ -1,0 +1,7 @@
+
+Header set Access-Control-Allow-Origin *
+RewriteEngine On
+RewriteBase /pr1/php/api/
+options +FollowSymLinks
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule .* server.php/$0 [L]

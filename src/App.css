@@ -1,5 +1,13 @@
 .App {
   text-align: center;
+  position: absolute;
+	width: 100%;
+	background-image: linear-gradient(rgba(255, 255, 255, 0.916), rgba(255, 255, 255, 0.136)), url("https://www.onlygfx.com/wp-content/uploads/2021/07/smiley-face-emoticon-background-4.jpg");
+	min-height: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	padding-bottom: 100px;
 }
 
 .App-logo {
@@ -36,3 +44,47 @@
     transform: rotate(360deg);
   }
 }
+
+h1{
+  margin: 0 !important;
+}
+
+
+
+nav{
+  background-color: gray;
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+nav a{
+  text-decoration: none;
+  color: white;
+  font-weight: 800;
+}
+
+nav h1{
+  color: white;
+}
+
+.container-signup{
+  margin-right: auto;
+  margin-left: auto;
+  border: 5px solid black;
+  max-width: 600px;
+  background-color: rgb(40, 57, 79);
+  border-radius: 20px;
+}
+
+.container-signup button{
+  border-color: white;
+}
+.container-signup button:hover{
+  border-color: blue;
+}
+
+.container-signup p, h1{
+  color: white;
+}
+
