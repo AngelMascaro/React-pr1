@@ -6,7 +6,7 @@ import Profile from "./pages/Profile"
 import { Link } from "react-router-dom";
 // import { Navbar } from "react-bootstrap";
 import Logo from './logo.svg';
-// import { useState } from "react"
+import { useState } from "react"
 
 function App() {
 
@@ -54,14 +54,12 @@ function App() {
         </ul>
       </div>
     </nav>
-
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="About" element={<About />} />
-        <Route path="Signup" element={<Signup />} />
-        <Route path="Profile/:id" element={<Profile />} />
+        <Route path="/" element={<Home/>} />
+        <Route path="About" element={<About/>} />
+        <Route path="Signup" element={<Signup/>} />
+        <Route path="Profile/:id" element={<Profile/>} />
       </Routes>
-      
     </div>
   )
 }

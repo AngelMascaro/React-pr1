@@ -4,6 +4,7 @@ import '../App.css'
 import { useParams } from 'react-router-dom';
 import UserData from '../components/UserData';
 
+
 interface User{
     Username:""
     Email:""

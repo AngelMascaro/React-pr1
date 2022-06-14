@@ -402,6 +402,7 @@ function loginUser(){
 //Function: signup()
 //Aquesta funció es per registrar un nou usuari a l'aplicacio
 function signupUser(){
+    $qFiles=null;
     $data = json_decode(file_get_contents('php://input'));
     $resposta = null;
     if(is_null($data)){
@@ -410,6 +411,13 @@ function signupUser(){
     }
     $data->Password_hash = password_hash($data->Password_hash, PASSWORD_BCRYPT);
     try {
+
+        // $SQL = "SELECT Username from usuaris Where Username = $data->Username";
+        // $consulta = (BdD::$connection)->prepare($SQL);
+        // $qFiles = $consulta->execute();
+
+        // if($qFiles > 0){
+
         $SQL = "INSERT INTO usuaris(Username,Email,Password_hash,Birthday) 
         VALUES (:Username,:Email,:Password_hash,:Birthday)";
         $consulta = (BdD::$connection)->prepare($SQL);
@@ -419,6 +427,7 @@ function signupUser(){
         $consulta->bindParam('Birthday',$data->Birthday);
         $qFiles = $consulta->execute();
                 header('HTTP/1.1 200 Ok');
+                
 
         if($qFiles > 0){
             $SQL = "SELECT Username, User_id from usuaris Where Username = :Username";
@@ -438,11 +447,13 @@ function signupUser(){
         else{
             header('HTTP/1.1 409 Register failed');
         }
-    } 
+    }
+    // }
     catch(PDOException $e) {
         $e->getMessage();
-        header('HTTP/1.1 400 Bad Request2');
+        header('HTTP/1.1 409 Register failed');
     }
+    
 }
 
 //Function: getAllUsers()

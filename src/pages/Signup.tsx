@@ -1,6 +1,6 @@
 import React from 'react'
 import SignupWithRHForms from '../components/SignupWithRHForms'
-import SignupForm from '../components/SignupForm'
+// import SignupForm from '../components/SignupForm'
 
 
 function Signup() {
@@ -9,7 +9,7 @@ function Signup() {
             <br />
             <SignupWithRHForms/>
             <br />
-            <SignupForm/>
+            {/* <SignupForm/> */}
         </div>
     )
 }
