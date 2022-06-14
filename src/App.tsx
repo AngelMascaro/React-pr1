@@ -6,8 +6,12 @@ import Profile from "./pages/Profile"
 import { Link } from "react-router-dom";
 // import { Navbar } from "react-bootstrap";
 import Logo from './logo.svg';
+// import { useState } from "react"
 
 function App() {
+
+  // const [logged, setLogged] = useState(false)
+
   return (
 
     <div className="App">

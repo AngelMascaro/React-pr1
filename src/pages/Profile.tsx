@@ -2,10 +2,12 @@ import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import '../App.css'
 import { useParams } from 'react-router-dom';
+import UserData from '../components/UserData';
 
 interface User{
     Username:""
     Email:""
+    Birthday:""
 }
 
 function Profile() {
@@ -28,8 +30,13 @@ function Profile() {
 
     return (
         <div className='profile'>
-            <p>{userData?.Username}</p>
-            <p>{userData?.Email}</p>
+            <br />
+            <UserData
+                Username={userData?.Username} 
+                Email={userData?.Email}
+                Src={`http://localhost:80/pr1/php/api/images/fotos_perfil_upload/${userId.id}.jpg`}
+                Birthday={userData?.Birthday}
+            />
 
         </div>
     )

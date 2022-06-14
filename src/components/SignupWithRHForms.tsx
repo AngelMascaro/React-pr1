@@ -1,4 +1,4 @@
-// import React from "react";
+import React, { useState } from 'react'
 // import ReactDOM from "react-dom";
 import { useForm } from "react-hook-form";
 import '../App.css';
@@ -11,27 +11,65 @@ interface IFormInputs {
   Username: string;
   Email: string;
   Password_hash: string;
+  Birthday: Date
 }
 
 function SignupWithRHForms() {
+
+    //preview img
+    const [file, setFile] = useState(null);
+    const [filePre, setFilePre] = useState(null);
+    const handleChange = async (
+        event: React.ChangeEvent<HTMLInputElement>      
+    ): Promise<any> => {
+        const fileLoaded = URL.createObjectURL(event.target.files[0]);
+        const files = event.target.files;
+
+        setFile(files);
+        setFilePre(fileLoaded);
+        // console.log('files: ', files);
+        // console.log('file ', file);
+    };
+
+    //per redirigir
     const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<IFormInputs>();
+    const {
+        register,
+        watch,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<IFormInputs>();
 
-  const onSubmit = (data: IFormInputs) => {
+    const onSubmit = (data: IFormInputs) => {
+        let formData = new FormData();
+        formData.append('file', file[0]);
+        console.log("formdata",formData, file[0],"file")
+           
+        axios.post("http://localhost:80/pr1/php/api/usuaris/signup",data)
+        .then((r) => {   
+            console.log(r)
 
-    axios.post("http://localhost:80/pr1/php/api/usuaris/signup",data)
-    .then((r) => {   
-        console.log(r)
-        navigate('/Profile/'+r.data[0].User_id)
-    })
-    .catch(error => console.log(error))
-    console.log(data)
-  };
+            if(r.status === 200){
+
+                axios
+                .post(
+                    "http://localhost/pr1/php/api/usuaris/upload_image/" + r.data[0].User_id, 
+                    formData, {headers : {'content-type': 'multipart/form-data'}}
+                )
+                .then((r)=>{
+                    console.log("fdata",formData);    
+                })
+                setTimeout(() => {
+                    navigate('/Profile/'+r.data[0].User_id)
+                }, 2000);
+            }
+        })
+        .catch(error => console.log(error))
+        console.log(data)
+    };
+
+
 
   return (
     <div className="container-signup">
@@ -54,8 +92,8 @@ function SignupWithRHForms() {
                         message:"min3"
                         }, 
                     maxLength:{
-                        value:8, 
-                        message:"max8"
+                        value:16, 
+                        message:"max16"
                         },  
                     }
                 )} 
@@ -113,7 +151,47 @@ function SignupWithRHForms() {
                 {errors?.Password_hash?.message}
             </span>
         </div>
-         
+      
+      <div className="form-floating my-3 col-12">
+            <input
+                type="date"
+                id="Birthday"
+                className="form-control"
+                placeholder="Your bithday, here!"
+                 {...register(
+                    "Birthday"
+                )} 
+            />
+            <label htmlFor="bDate">Birthday</label>
+        </div>
+
+        <div className="form-floating my-3 col-12">
+            <input
+                type="file"
+                onChange={handleChange}
+                className="form-control"
+                id='file'
+                name='file'
+                // {...register(
+                //     "file"
+                // )} 
+            />
+            <label htmlFor="file">Avatar</label>
+        </div>
+
+        <div className="img-preview-signup">
+            <img
+                src={filePre}
+                style={{
+                    display: 'flex',
+                    border: '2px solid white',
+                    maxWidth: '300px',
+                    maxHeight: '300px',
+                }}  
+            />
+        </div>
+        
+        
         <button className="btn btn-dark my-3">SignUp!</button>
       </form>
     </div>

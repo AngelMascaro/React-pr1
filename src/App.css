@@ -88,3 +88,8 @@ nav h1{
   color: white;
 }
 
+.img-preview-signup{
+  display: flex;
+  justify-content: center;
+}
+

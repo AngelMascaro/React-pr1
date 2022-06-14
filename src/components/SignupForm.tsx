@@ -19,18 +19,6 @@ function SignupForm() {
         setFormPassword(event.target.value);
     }
 
-    // const getData = () =>{
-    //     axios.get("http://localhost:80/pr1/php/api/topic/home").then((r)=>console.log(r))
-    // }
-    useEffect(() => {
-        // getData();
-        testPassword();
-      }, []);
-
-    // const error = ()=>{
-    //     return <div><h1>ERROR</h1></div>
-    // }
-
     const handleSubmit = () => {
         var dades = {
             Username : formName, 

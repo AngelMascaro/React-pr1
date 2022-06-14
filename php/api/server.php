@@ -23,10 +23,6 @@ class Server {
        to identify the resource.
     */
 
-    // private $servername = "localhost";
-    // private $username = "griforum";
-    // private $password = "pyHEtxK47P";
-    // private $database = "db_griforum";
     private $servername = "localhost";
     private $username = "admin";
     private $password = "daw";
@@ -44,7 +40,7 @@ class Server {
         $method = $_SERVER['REQUEST_METHOD'];
         $paths = explode('/', $this->paths($uri));
         array_shift($paths); //Eliminar string buit inicial
-        array_shift($paths); //Eliminar "griforum"
+        array_shift($paths); //Eliminar "pr1"
         array_shift($paths); //Eliminar "php"
         array_shift($paths); //Eliminar "api"
         

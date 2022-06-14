@@ -89,24 +89,24 @@ function getid($username){
 function PujarFotoPerfil($usuari){
     // var_dump($_FILES, $_POST, $paths);
     header("Content-type: image");
-    $target_dir = "../images/fotos_perfil_upload/";
+    $target_dir = "./images/fotos_perfil_upload/";
     $target_file = $target_dir . basename($usuari . ".jpg");
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-    if(isset($_FILES["file"]["tmp_name"])) 
-    {
-        $check = getimagesize($_FILES["file"]["tmp_name"]);
-        if($check !== false)$uploadOk = 1;
-        else $uploadOk = 0;
-    }
-    if ($_FILES["file"]["size"] > 10000000) $uploadOk = 0;
-    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) $uploadOk = 0;
-    else 
-    {
+    // if(isset($_FILES["file"]["tmp_name"])) 
+    // {
+    //     $check = getimagesize($_FILES["file"]["tmp_name"]);
+    //     if($check !== false)$uploadOk = 1;
+    //     else $uploadOk = 0;
+    // }
+    // if ($_FILES["file"]["size"] > 10000000) $uploadOk = 0;
+    // if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) $uploadOk = 0;
+    // else 
+    // {
         if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)){
             // echo "L'arxiu s'ha pujAt corectament!<br>";
             try{
-                $SQL = "UPDATE Users SET Avatar = :avatar WHERE User_id = :userid";
+                $SQL = "UPDATE usuaris SET Avatar = :avatar WHERE User_id = :userid";
                 $consulta = (BdD::$connection)->prepare($SQL);
                 $consulta->bindParam('userid',$usuari);
                 $consulta->bindParam('avatar',$usuari);
@@ -118,9 +118,17 @@ function PujarFotoPerfil($usuari){
             }
             
             header('HTTP/1.1 200 IMATGE PUJADA');
-        } 
+        }
+        else{
+            echo json_encode($_FILES);
+
+            header('HTTP/1.1 400 IMATGE no PUJADA');
+
+        }
+
+         
     }
-}
+// }
 
 //Function: updateUser()
 //Aquesta funció serveix per actualitzar les dades d'un usuari
@@ -248,7 +256,7 @@ function getUser($username){
     $resposta = null;
     try{
         
-        $SQL = "SELECT User_id, Username, Email FROM `usuaris` WHERE User_id = :userid";
+        $SQL = "SELECT User_id, Username, Email, Birthday FROM `usuaris` WHERE User_id = :userid";
         $consulta = (BdD::$connection)->prepare($SQL);
         $consulta->bindParam(':userid',$username);
         $qFiles = $consulta->execute();
@@ -402,12 +410,13 @@ function signupUser(){
     }
     $data->Password_hash = password_hash($data->Password_hash, PASSWORD_BCRYPT);
     try {
-        $SQL = "INSERT INTO usuaris(Username,Email,Password_hash) 
-        VALUES (:Username,:Email,:Password_hash)";
+        $SQL = "INSERT INTO usuaris(Username,Email,Password_hash,Birthday) 
+        VALUES (:Username,:Email,:Password_hash,:Birthday)";
         $consulta = (BdD::$connection)->prepare($SQL);
         $consulta->bindParam('Username',$data->Username);
         $consulta->bindParam('Email',$data->Email);
         $consulta->bindParam('Password_hash',$data->Password_hash);
+        $consulta->bindParam('Birthday',$data->Birthday);
         $qFiles = $consulta->execute();
                 header('HTTP/1.1 200 Ok');
 
