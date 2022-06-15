@@ -13,7 +13,6 @@ interface User{
 
 function Profile() {
 
-    
     const userId = useParams();
     const [userData, setUserData] = useState<User>();
 
@@ -25,8 +24,7 @@ function Profile() {
         axios.get("http://localhost:80/pr1/php/api/usuaris/perfil/" + userId.id)
         .then((r)=>  setUserData(r.data[0]))
         .catch(error => console.log(error))
-        console.log(userData)
-
+        // console.log(userData)
     }
 
     return (

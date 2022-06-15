@@ -43,7 +43,7 @@ function funcions_usuaris($method, $accio,$usuari) {
             signupUser();
         }
         else if($accio == "login"){
-            updateUserStatusConnectedLogin();
+            // updateUserStatusConnectedLogin();
             loginUser();
         }
         else if($accio == "logout"){
@@ -370,9 +370,9 @@ function loginUser(){
     $key = substr($code, 16);
     $resposta = null;
     try {
-        $SQL = "SELECT User_id, Email, Username, Password_hash, Status FROM `Users` WHERE Email = :email";
+        $SQL = "SELECT Username, User_id, Password_hash FROM usuaris WHERE Username = :username";
         $consulta = (BdD::$connection)->prepare($SQL);
-        $consulta->bindParam(':email',$data->Email);
+        $consulta->bindParam(':username',$data->Username);
         $qFiles = $consulta->execute();
         if($qFiles > 0){
             $consulta->setFetchMode(PDO::FETCH_ASSOC); 
@@ -387,7 +387,8 @@ function loginUser(){
             setrawcookie("GrF-TOKEN", base64_encode(openssl_encrypt($resposta["User_id"], "AES-128-CBC", $key, OPENSSL_RAW_DATA, $iv)), time() + 10800, "/");
             // setrawcookie("GrF-UserLogd",base64_encode(openssl_encrypt($resposta["Username"], "AES-128-CBC", $key, OPENSSL_RAW_DATA, $iv)), time() + 10800, "/");
             setrawcookie("GrF-UserLogd", $resposta["Username"], time() + 10800, "/");
-            echo json_encode($resposta["Username"]);
+            $resultat = ["User_id"=>$resposta["User_id"], "Username"=>$resposta["Username"]];
+            echo json_encode($resultat);
         }
         else{
             header('HTTP/1.1 401 Unauthorized');

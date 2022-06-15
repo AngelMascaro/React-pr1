@@ -14,7 +14,11 @@ interface IFormInputs {
   Birthday: Date
 }
 
-function SignupWithRHForms() {
+interface Props{
+    logged:Function
+}
+
+function SignupWithRHForms(props:Props) {
 
     //preview img
     const [file, setFile] = useState(null);
@@ -51,7 +55,7 @@ function SignupWithRHForms() {
             console.log(r)
 
             if(r.status === 200){
-
+                // props.logged(r.data[0].User_id)
                 axios
                 .post(
                     "http://localhost/pr1/php/api/usuaris/upload_image/" + r.data[0].User_id, 
@@ -60,9 +64,8 @@ function SignupWithRHForms() {
                 .then((r)=>{
                     console.log("fdata",formData);    
                 })
-                setTimeout(() => {
-                    navigate('/Profile/'+r.data[0].User_id)
-                }, 2000);
+                navigate('/Login')
+                    // navigate('/Profile/'+r.data[0].User_id)
             }
         })
         .catch(error => console.log(error))
@@ -96,7 +99,7 @@ function SignupWithRHForms() {
                     }
                 )} 
             />
-            <label htmlFor="fName">First Name</label>
+            <label htmlFor="fName">Username</label>
             <span className="text-danger d-block mb-2">
                 {errors?.Username?.message}
             </span>
