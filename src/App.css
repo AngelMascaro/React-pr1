@@ -111,6 +111,7 @@ nav h1{
 
 .users-users img{
   border-radius: 100%;
+  max-width: 100px;
 }
 
 .container-users-users{

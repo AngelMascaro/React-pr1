@@ -15,22 +15,22 @@ import {Login as LoginStore} from './store/UserLogged/action'
 function App() {
 
   const [logged, setLogged] = useState(false)
-  const [userId, setUserId] = useState("")
-  const [userUsername, setUserUsername] = useState("")
+  // const [userId, setUserId] = useState("")
+  // const [userUsername, setUserUsername] = useState("")
 
   const login = (id:string, username:string)=>{
+    store.dispatch(LoginStore(true, id, username))
     setLogged(true)
-    setUserId(id)
-    setUserUsername(username)  
-    console.log(store.getState().loggedReducer.logged)
+    // setUserId(id)
+    // setUserUsername(username)        
+    // console.log("store",store.getState().loggedReducer.logged)
   }
   const logout = ()=>{
     store.dispatch(LoginStore(false, "", ""))
     setLogged(false)
-    setUserId("")
-    setUserUsername("")
+    // setUserId("")
+    // setUserUsername("")
   }
-  
 
   return (
 
@@ -144,7 +144,8 @@ function App() {
         <Route path="About" element={<About/>} />
         <Route path="Signup"  element={<Signup logged={login} />} />
         <Route path="Login"  element={<Login logged={login} />} />
-        <Route path="Profile/:id" element={<Profile userLoggedId={userId}/>} />
+        <Route path="Profile/:id" element={<Profile userLoggedId={store.getState().loggedReducer.userId}/>} />
+        {/* <Route path="Profile/:id" element={<Profile userLoggedId={userId}/>} /> */}
         <Route path="Users" element={<Users/>} />
       </Routes>
     </div>

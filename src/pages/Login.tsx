@@ -41,7 +41,7 @@ function Login(props:Props) {
                 //modifiquem state de app
                 props.logged(r.data.User_id, r.data.Username)
             //REDUX
-            store.dispatch(LoginStore(true,r.data.User_id, r.data.Username))
+            // store.dispatch(LoginStore(true,r.data.User_id, r.data.Username))
             // console.log("initialState", store.getState().loggedReducer)
                 //mostrem spinner
                 spin()
