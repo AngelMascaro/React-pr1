@@ -93,3 +93,39 @@ nav h1{
   justify-content: center;
 }
 
+.users-users{
+  border: 5px solid black;
+  border-radius: 100%;
+  width: 200px;
+  height: 200px;
+  margin: 10px;
+  background-color: rgb(40, 57, 79);
+  color:white;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+.users-users div, a{
+  text-decoration: none;
+}
+
+.users-users img{
+  border-radius: 100%;
+}
+
+.container-users-users{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.user div{
+  display: flex;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  justify-content: center;
+}
+/* .logonav{
+  width:100px;
+} */

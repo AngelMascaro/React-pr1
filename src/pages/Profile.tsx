@@ -11,21 +11,28 @@ interface User{
     Birthday:""
 }
 
-function Profile() {
+interface Props{
+    userLoggedId:string
+}
+
+function Profile(props:Props) {
 
     const userId = useParams();
     const [userData, setUserData] = useState<User>();
 
     useEffect(() => {
         getData();
-      }, []);
+      },[userId]);
 
     const getData = () =>{
         axios.get("http://localhost:80/pr1/php/api/usuaris/perfil/" + userId.id)
         .then((r)=>  setUserData(r.data[0]))
         .catch(error => console.log(error))
-        // console.log(userData)
+        console.log(userData)
     }
+
+    
+
 
     return (
         <div className='profile'>
@@ -36,6 +43,12 @@ function Profile() {
                 Src={`http://localhost:80/pr1/php/api/images/fotos_perfil_upload/${userId.id}.jpg`}
                 Birthday={userData?.Birthday}
             />
+            {
+                props.userLoggedId.toString() === userId.id.toString() ? 
+                <h1>hola</h1>
+                :
+                <h1>no</h1>
+            }
 
         </div>
     )

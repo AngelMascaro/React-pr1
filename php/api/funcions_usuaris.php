@@ -354,17 +354,6 @@ function loginUser(){
         header('HTTP/1.1 400 Bad Request');
         return;
     }
-    
-    //DESXIFRAR TEXT XIFRAT AMB CRYPTO-JS
-    // $code = md5("Vb7jk986hVhGfJm87Fj9b6");
-    // $iv = substr($code, 0, 16);
-    // $key = substr($code, 16);
-    // $text_desxifrat = openssl_decrypt(base64_decode($data->provacrypto), "AES-128-CBC", $key, OPENSSL_RAW_DATA, $iv);
-    // var_dump("text_desxifrat".$text_desxifrat);
-    // XIFRAR
-    // $token = openssl_decrypt(base64_decode($_COOKIE["GrFlGd"]), "AES-128-CBC", $key, OPENSSL_RAW_DATA, $iv);
-    // DESXIFRAR
-    // $token2= base64_encode(openssl_encrypt("angel", "AES-128-CBC", $key, OPENSSL_RAW_DATA, $iv));
     $code = md5("Vb7jk986hVhGfJm87Fj9b6");
     $iv = substr($code, 0, 16);
     $key = substr($code, 16);
@@ -412,13 +401,6 @@ function signupUser(){
     }
     $data->Password_hash = password_hash($data->Password_hash, PASSWORD_BCRYPT);
     try {
-
-        // $SQL = "SELECT Username from usuaris Where Username = $data->Username";
-        // $consulta = (BdD::$connection)->prepare($SQL);
-        // $qFiles = $consulta->execute();
-
-        // if($qFiles > 0){
-
         $SQL = "INSERT INTO usuaris(Username,Email,Password_hash,Birthday) 
         VALUES (:Username,:Email,:Password_hash,:Birthday)";
         $consulta = (BdD::$connection)->prepare($SQL);
@@ -427,9 +409,9 @@ function signupUser(){
         $consulta->bindParam('Password_hash',$data->Password_hash);
         $consulta->bindParam('Birthday',$data->Birthday);
         $qFiles = $consulta->execute();
-                header('HTTP/1.1 200 Ok');
+        
+        header('HTTP/1.1 200 Ok');
                 
-
         if($qFiles > 0){
             $SQL = "SELECT Username, User_id from usuaris Where Username = :Username";
             $consulta = (BdD::$connection)->prepare($SQL);
@@ -438,9 +420,7 @@ function signupUser(){
             if($qFiles > 0){
                 $consulta->setFetchMode(PDO::FETCH_ASSOC); 
                 $result = $consulta->fetchAll();
-                foreach($result as $fila) {
-                    $resposta[] = $fila;
-                }
+                foreach($result as $fila) {$resposta[] = $fila;}
                 echo json_encode($resposta);
                 header('HTTP/1.1 200 Ok');
             }
@@ -449,12 +429,9 @@ function signupUser(){
             header('HTTP/1.1 409 Register failed');
         }
     }
-    // }
-    catch(PDOException $e) {
-        $e->getMessage();
+    catch(PDOException $e) {$e->getMessage();
         header('HTTP/1.1 409 Register failed');
     }
-    
 }
 
 //Function: getAllUsers()
@@ -462,7 +439,7 @@ function signupUser(){
 function getAllUsers(){
     $resposta = null;
     try{
-        $SQL = "SELECT Username, User_id, Status FROM `Users` LIMIT 18";
+        $SQL = "SELECT Username, Email, Birthday, User_id FROM usuaris LIMIT 18";
         $consulta = (BdD::$connection)->prepare($SQL);
         $consulta->bindParam(':username',$username);
         $qFiles = $consulta->execute();

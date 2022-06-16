@@ -14,7 +14,7 @@ import React, { useState } from 'react'
 import { useForm } from "react-hook-form";
 import '../App.css';
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
@@ -157,6 +157,8 @@ function Login(props:Props) {
       
         
         <button className="btn btn-dark my-3">Login!</button>
+        <p>No estas registat? <Link to={"/Signup"}>Registra't!</Link></p>
+
       </form>
     </div>
     </div>

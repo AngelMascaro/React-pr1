@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useForm } from "react-hook-form";
 import '../App.css';
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
@@ -52,7 +52,7 @@ function SignupWithRHForms(props:Props) {
            
         axios.post("http://localhost:80/pr1/php/api/usuaris/signup",data)
         .then((r) => {   
-            console.log(r)
+            // console.log(r)
 
             if(r.status === 200){
                 // props.logged(r.data[0].User_id)
@@ -75,7 +75,7 @@ function SignupWithRHForms(props:Props) {
   return (
     <div className="container-signup">
     
-    <h1>Signup React Hook Forms</h1>
+    <h1>Signup!</h1>
 
       <form onSubmit={handleSubmit(onSubmit)}>
 
@@ -179,7 +179,9 @@ function SignupWithRHForms(props:Props) {
             />
             <label htmlFor="file">Avatar</label>
         </div>
-
+        
+        {
+            filePre ?
         <div className="img-preview-signup">
             <img
                 src={filePre}
@@ -191,9 +193,13 @@ function SignupWithRHForms(props:Props) {
                 }}  
             />
         </div>
+        :
+        <p></p>
+        }
         
         
         <button className="btn btn-dark my-3">SignUp!</button>
+        <p>Ja estas registat? <Link to={"/Login"}>Login!</Link></p>
       </form>
     </div>
   );
