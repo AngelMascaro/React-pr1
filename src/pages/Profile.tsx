@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import '../App.css'
 import { useParams } from 'react-router-dom';
 import UserData from '../components/UserData';
+import CreateJob from '../components/CreateJob'
 
 
 interface User{
@@ -31,7 +32,7 @@ function Profile(props:Props) {
         console.log(userData)
     }
 
-    
+
 
 
     return (
@@ -44,8 +45,12 @@ function Profile(props:Props) {
                 Birthday={userData?.Birthday}
             />
             {
-                props.userLoggedId.toString() === userId.id.toString() ? 
-                <h1>hola</h1>
+                props.userLoggedId.toString() === userId.id.toString() ?
+                <div>
+                    {/* <CreateJob></CreateJob> */}
+                    <h1>hola</h1>
+              
+                </div> 
                 :
                 <h1>no</h1>
             }

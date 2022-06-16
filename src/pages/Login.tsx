@@ -1,20 +1,11 @@
-// import React from 'react'
-
-// function Login() {
-//     return (
-//         <div>
-//         </div>
-//     )
-// }
-
-// export default Login
-
 import React, { useState } from 'react'
 // import ReactDOM from "react-dom";
 import { useForm } from "react-hook-form";
 import '../App.css';
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom';
+import store from '../store/store'
+import {Login as LoginStore} from '../store/UserLogged/action'
 
 
 
@@ -28,6 +19,7 @@ interface Props{
 }
 
 function Login(props:Props) {
+
 
     //per redirigir
     const navigate = useNavigate();
@@ -48,12 +40,15 @@ function Login(props:Props) {
             if(r.status === 200){
                 //modifiquem state de app
                 props.logged(r.data.User_id, r.data.Username)
+            //REDUX
+            store.dispatch(LoginStore(true,r.data.User_id, r.data.Username))
+            // console.log("initialState", store.getState().loggedReducer)
                 //mostrem spinner
                 spin()
                 //redirigim a perfil
                 setTimeout(() => {
                     navigate('/Profile/'+r.data.User_id)
-                }, 2000);
+                }, 3000);
             }
         })
         .catch(error => setShowError(true))

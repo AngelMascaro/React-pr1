@@ -9,6 +9,8 @@ import Logo from './logo.svg';
 import { useState } from "react"
 import axios from "axios"
 import Users from "./pages/Users"
+import store from './store/store'
+import {Login as LoginStore} from './store/UserLogged/action'
 
 function App() {
 
@@ -19,15 +21,16 @@ function App() {
   const login = (id:string, username:string)=>{
     setLogged(true)
     setUserId(id)
-    setUserUsername(username)
+    setUserUsername(username)  
+    console.log(store.getState().loggedReducer.logged)
   }
   const logout = ()=>{
+    store.dispatch(LoginStore(false, "", ""))
     setLogged(false)
     setUserId("")
     setUserUsername("")
   }
-
-
+  
 
   return (
 
@@ -58,6 +61,45 @@ function App() {
           </li>
 
           {
+            
+            store.getState().loggedReducer.logged === false ?
+            <li className="nav-item mx-3 my-sm-4 my-1">
+              <Link to="/Signup">SIGNUP</Link>
+            </li>
+            :
+            <p></p>
+          }
+
+          {
+            store.getState().loggedReducer.logged === false ?
+            <li className="nav-item mx-3 my-sm-4 my-1">
+              <Link to="/Login">LOGIN</Link>
+            </li>
+            :
+            <p></p>
+          }
+
+          {
+            store.getState().loggedReducer.logged === true ?
+            <li className="nav-item mx-3 my-sm-4 my-1">
+              <Link to={`/Profile/${store.getState().loggedReducer.userId}`}>PROFILE: {store.getState().loggedReducer.userUsername}</Link>
+            </li>
+            :
+            <li className="nav-item mx-3 my-sm-4 my-1">
+              <Link to="/Profile">{store.getState().loggedReducer.userUsername}</Link>
+            </li>        
+          }
+          {
+            store.getState().loggedReducer.logged === true ?
+            <li className="nav-item mx-3 my-sm-4 my-1">
+              <Link to={"/"} onClick={logout}>LOGOUT</Link>
+            </li>
+            :
+            <p></p>      
+          }
+
+          {/* SENSE REDUX */}
+          {/* {
             logged === false ?
             <li className="nav-item mx-3 my-sm-4 my-1">
               <Link to="/Signup">SIGNUP</Link>
@@ -92,7 +134,7 @@ function App() {
             </li>
             :
             <p></p>      
-          }
+          } */}
 
         </ul>
       </div>

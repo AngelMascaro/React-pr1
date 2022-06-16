@@ -129,3 +129,11 @@ nav h1{
 /* .logonav{
   width:100px;
 } */
+.create-job{
+  margin-right: auto;
+  margin-left: auto;
+  border: 5px solid black;
+  max-width: 600px;
+  background-color: rgb(40, 57, 79);
+  border-radius: 20px;
+}
