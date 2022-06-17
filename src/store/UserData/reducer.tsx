@@ -14,7 +14,7 @@ const initialState:UserData = {
 }
 
 export default (state = initialState, action)=>{
-    if ( action.type === "INSERT_USER_BDD"){
+    if ( action.type === "SET_USER_DATA"){
         return{
             ...state,
             Username : action.payload.Username,

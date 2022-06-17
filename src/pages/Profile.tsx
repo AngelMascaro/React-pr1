@@ -26,16 +26,16 @@ function Profile(props:Props) {
 
     useEffect(() => {
         getData();
-      },[userId]);
+      });
 
-    const  getData = async() =>{
+    const  getData = () =>{
         axios.get("http://localhost:80/pr1/php/api/usuaris/perfil/" + userId.id)
         .then((r)=>  
-            // setUserData(r.data[0]
-            store.dispatch(setUserDataRedux(r.data[0].Username,r.data[0].Email,`http://localhost:80/pr1/php/api/images/fotos_perfil_upload/${r.data[0].User_id}.jpg`,r.data[0].Birthday))
+            setUserData(r.data[0])
+            // store.dispatch(setUserDataRedux(r.data[0].Username,r.data[0].Email,`http://localhost:80/pr1/php/api/images/fotos_perfil_upload/${r.data[0].User_id}.jpg`,r.data[0].Birthday))
         )
-        .catch(error => console.log(error))
-        console.log(userData)
+        // .catch(error => console.log(error))
+        // console.log(store.getState())
     }
 
 
@@ -45,14 +45,15 @@ function Profile(props:Props) {
         <div className='profile'>
             <br />
             <UserData
-                Username={store.getState().userDataReducer.Username} 
-                Email={store.getState().userDataReducer.Email}
-                Src={store.getState().userDataReducer.Src}
-                Birthday={store.getState().userDataReducer.Birthday}
-                // Username={userData?.Username} 
-                // Email={userData?.Email}
-                // Src={`http://localhost:80/pr1/php/api/images/fotos_perfil_upload/${userId.id}.jpg`}
-                // Birthday={userData?.Birthday}
+                // Username={store.getState().userDataReducer.Username} 
+                // Email={store.getState().userDataReducer.Email}
+                // Src={store.getState().userDataReducer.Src}
+                // Birthday={store.getState().userDataReducer.Birthday}
+                
+                Username={userData?.Username} 
+                Email={userData?.Email}
+                Src={`http://localhost:80/pr1/php/api/images/fotos_perfil_upload/${userId.id}.jpg`}
+                Birthday={userData?.Birthday}
             />
             {
                 props.userLoggedId.toString() === userId.id.toString() ?

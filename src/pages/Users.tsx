@@ -36,7 +36,7 @@ function Users() {
                 users.length !== 0 ?
                 users.map((user:Users, index)=>
 
-                <div className='user'>
+                <div key={index} className='user'>
                 <Link to={`/Profile/${user.User_id}`}>
                     <div className='users-users'>
                         <img className='my-2' height="80px" src={`http://localhost:80/pr1/php/api/images/fotos_perfil_upload/${user.User_id}.jpg`} />
