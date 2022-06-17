@@ -26,34 +26,35 @@ function Profile(props:Props) {
 
     useEffect(() => {
         getData();
-      });
+      },);
 
     const  getData = () =>{
         axios.get("http://localhost:80/pr1/php/api/usuaris/perfil/" + userId.id)
-        .then((r)=>  
+        .then((r)=>{
+            store.dispatch(setUserDataRedux(r.data[0].Username,r.data[0].Email,`http://localhost:80/pr1/php/api/images/fotos_perfil_upload/${r.data[0].User_id}.jpg`,r.data[0].Birthday))
             setUserData(r.data[0])
-            // store.dispatch(setUserDataRedux(r.data[0].Username,r.data[0].Email,`http://localhost:80/pr1/php/api/images/fotos_perfil_upload/${r.data[0].User_id}.jpg`,r.data[0].Birthday))
-        )
+        })
         // .catch(error => console.log(error))
         // console.log(store.getState())
     }
 
 
-
-
     return (
         <div className='profile'>
             <br />
-            <UserData
-                // Username={store.getState().userDataReducer.Username} 
-                // Email={store.getState().userDataReducer.Email}
-                // Src={store.getState().userDataReducer.Src}
-                // Birthday={store.getState().userDataReducer.Birthday}
-                
+            {/* <UserData                
                 Username={userData?.Username} 
                 Email={userData?.Email}
                 Src={`http://localhost:80/pr1/php/api/images/fotos_perfil_upload/${userId.id}.jpg`}
                 Birthday={userData?.Birthday}
+            />
+            <h1>REDUX</h1> */}
+            <UserData
+                Username={store.getState().userDataReducer.Username} 
+                Email={store.getState().userDataReducer.Email}
+                Src={store.getState().userDataReducer.Src}
+                Birthday={store.getState().userDataReducer.Birthday}
+
             />
             {
                 props.userLoggedId.toString() === userId.id.toString() ?
