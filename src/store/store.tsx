@@ -1,8 +1,9 @@
 import { createStore, combineReducers, compose } from "redux";
 import loggedReducer from '../store/UserLogged/reducer'
+import userDataReducer from '../store/UserData/reducer'
 
 const reducers = combineReducers({
-    loggedReducer,
+    loggedReducer,userDataReducer
 })
 declare global {
     interface Window {
