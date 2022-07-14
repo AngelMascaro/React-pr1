@@ -4,7 +4,6 @@ import '../App.css'
 import { useParams } from 'react-router-dom';
 import UserData from '../components/UserData';
 import CreateJob from '../components/CreateJob'
-
 import store from '../store/store'
 import {SetUserData as setUserDataRedux} from '../store/UserData/action'
 
@@ -26,7 +25,7 @@ function Profile(props:Props) {
 
     useEffect(() => {
         getData();
-      },);
+      },[]);
 
     const  getData = () =>{
         axios.get("http://localhost:80/pr1/php/api/usuaris/perfil/" + userId.id)
@@ -60,11 +59,11 @@ function Profile(props:Props) {
                 props.userLoggedId.toString() === userId.id.toString() ?
                 <div>
                     {/* <CreateJob></CreateJob> */}
-                    <h1>hola</h1>
+                    <h1>Owner True</h1>
               
                 </div> 
                 :
-                <h1>no</h1>
+                <h1>Owner False</h1>
             }
 
         </div>

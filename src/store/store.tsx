@@ -3,8 +3,11 @@ import loggedReducer from '../store/UserLogged/reducer'
 import userDataReducer from '../store/UserData/reducer'
 
 const reducers = combineReducers({
-    loggedReducer,userDataReducer
+    loggedReducer,
+    userDataReducer
 })
+
+//per les redux tools dev
 declare global {
     interface Window {
       __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
